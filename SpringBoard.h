@@ -6,6 +6,10 @@
 
 @class NSObject, UIImageView;
 
+@interface NSObject (Undocumented)
+- (id)safeValueForKey:(NSString *)key;
+@end
+
 @interface SBLibraryViewController : UIViewController
 @end
 

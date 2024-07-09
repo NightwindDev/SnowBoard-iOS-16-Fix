@@ -14,32 +14,30 @@
 - (void)didMoveToSuperview {
 	%orig;
 
-	// Safeguard - some devices seem to respring loop if the code is not wrapped in a dispatch_async
-	dispatch_async(dispatch_get_main_queue(), ^{
-		// Get image which contains background and text
-		UIImageView *const backgroundView = [self valueForKey:@"_backgroundView"];
-		if (!backgroundView) return;
+	// Get image which contains background and text
+	UIImageView *const backgroundView = [self safeValueForKey:@"_backgroundView"];
+	if (!backgroundView) return;
 
-		// SnowBoard badge image
-		UIImage *const image = [[[[%c(SnowBoardThemeLoader) sharedInstance] springboardTheme] badgeBackground] imageWithScale:[[UIScreen mainScreen] scale]];
-		if (!image) return;
+	// SnowBoard badge image
+	UIImage *const image = [[[[%c(SnowBoardThemeLoader) sharedInstance] springboardTheme] badgeBackground] imageWithScale:[[UIScreen mainScreen] scale]];
+	if (!image) return;
 
-		// Only add image once
-		if ([backgroundView.subviews containsObject:self._sb16fix_badgeBackgroundView]) return;
+	// Only add image once
+	if ([backgroundView.subviews containsObject:self._sb16fix_badgeBackgroundView]) return;
 
-		// Make image view
-		self._sb16fix_badgeBackgroundView = [[UIImageView alloc] initWithImage:image];
-		self._sb16fix_badgeBackgroundView.translatesAutoresizingMaskIntoConstraints = NO;
-		[backgroundView insertSubview:self._sb16fix_badgeBackgroundView atIndex:0];
+	// Make image view
+	self._sb16fix_badgeBackgroundView = [[UIImageView alloc] initWithImage:image];
+	self._sb16fix_badgeBackgroundView.translatesAutoresizingMaskIntoConstraints = NO;
+	// self._sb16fix_badgeBackgroundView.frame = CGRectMake(0, 0, 40, 40);
+	[backgroundView insertSubview:self._sb16fix_badgeBackgroundView atIndex:0];
 
-		// Activate constraints
-		[NSLayoutConstraint activateConstraints:@[
-			[self._sb16fix_badgeBackgroundView.widthAnchor constraintEqualToAnchor:backgroundView.widthAnchor],
-			[self._sb16fix_badgeBackgroundView.heightAnchor constraintEqualToAnchor:backgroundView.heightAnchor],
-			[self._sb16fix_badgeBackgroundView.centerXAnchor constraintEqualToAnchor:backgroundView.centerXAnchor],
-			[self._sb16fix_badgeBackgroundView.centerYAnchor constraintEqualToAnchor:backgroundView.centerYAnchor]
-		]];
-	});
+	// Activate constraints
+	[NSLayoutConstraint activateConstraints:@[
+		[self._sb16fix_badgeBackgroundView.widthAnchor constraintEqualToAnchor:backgroundView.widthAnchor],
+		[self._sb16fix_badgeBackgroundView.heightAnchor constraintEqualToAnchor:backgroundView.heightAnchor],
+		[self._sb16fix_badgeBackgroundView.centerXAnchor constraintEqualToAnchor:backgroundView.centerXAnchor],
+		[self._sb16fix_badgeBackgroundView.centerYAnchor constraintEqualToAnchor:backgroundView.centerYAnchor]
+	]];
 }
 
 + (UIColor *)badgeBackgroundColor {

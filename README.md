@@ -1,5 +1,6 @@
 # SnowBoard iOS 16 Fix
 An ***UNOFFICIAL*** fix for a crash in SnowBoard and badges on iOS 16!
+# ___PLEASE USE THE OFFICIAL UPDATE INSTEAD___
 
 ---
 ## Tweak In Action
